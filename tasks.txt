@@ -1,10 +1,12 @@
 Atividade:
-    Tabelas: Customer, Orders, Stock
+    Tabelas: Users, Orders, Stock
     Rotas: 
-        Customer:
-            CreateCustomer
-            UpdateCustomer
-            DeleteCustome
+        Users:
+            Post -> baseUrl/users ✅
+            Get -> baseUrl/users ✅
+            Get -> baseUrl/users/:id ✅
+            Patch -> baseUrl/users/:id ✅
+            Delete -> baseUrl/users/:id ✅
 
         Orders:
             CreateOrder (Info sobre product e customer)

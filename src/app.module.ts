@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions, Connection } from 'typeorm';
+import { MapsModule } from './maps/maps.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { getConnectionOptions, Connection } from 'typeorm';
         }),
     }),
     UsersModule,
+    MapsModule,
   ],
 })
 export class AppModule {
