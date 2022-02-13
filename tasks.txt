@@ -1,0 +1,33 @@
+Atividade:
+    Tabelas: Customer, Orders, Stock
+    Rotas: 
+        Customer:
+            CreateCustomer
+            UpdateCustomer
+            DeleteCustome
+
+        Orders:
+            CreateOrder (Info sobre product e customer)
+            DeleteOrder
+
+
+        Stock:
+            Create Product (com detalhes)
+
+        Rota especial:
+            GetCustomerByOrderID
+            GetProductDetailsByOrderID
+
+    Regras de negócio:
+        Uma order só poderá ser criada se houver estoque suficiente
+        Se uma order for criada, seus produtos devem ser subtraídos do estoque
+        Customer deve ter um campo Password encriptado
+
+Atividade 2:
+    Refatorar a atividade 1 usando:
+        Typeorm
+        DDD
+        SOLID
+        Utilizar Classes
+
+    Proteger alguma rota usando JWT
