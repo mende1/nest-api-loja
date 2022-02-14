@@ -19,7 +19,11 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Product> {
+  async findOne(@Param('id') id: string): Promise<Product | string> {
+    if (!(await this.productsService.findOne(id))) {
+      return new Error('Product not found.').message;
+    }
+
     return await this.productsService.findOne(id);
   }
 
@@ -27,12 +31,18 @@ export class ProductsController {
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+  ): Promise<Product | string> {
     const product = await this.productsService.findOne(id);
 
-    const quantity = updateProductDto.quantity;
-    const newQuantity = product.quantity - quantity;
+    const currentStock = product.quantity;
+    const requestedStock = updateProductDto.quantity;
 
-    return await this.productsService.update(id, newQuantity);
+    if (requestedStock > currentStock) {
+      return new Error('There is not enough stock for this product.').message;
+    }
+
+    const updatedStock = currentStock - requestedStock;
+
+    return await this.productsService.update(id, updatedStock);
   }
 }
