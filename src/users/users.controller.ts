@@ -12,6 +12,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DeleteResult } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Controller('users')
 export class UsersController {
@@ -19,6 +20,12 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    const currentPassword = createUserDto.password;
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(currentPassword, saltOrRounds);
+
+    createUserDto.password = hashedPassword;
+
     return await this.usersService.create(createUserDto);
   }
 
@@ -37,6 +44,12 @@ export class UsersController {
     @Param() id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
+    const currentPassword = updateUserDto.password;
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(currentPassword, saltOrRounds);
+
+    updateUserDto.password = hashedPassword;
+
     return await this.usersService.update(id, updateUserDto);
   }
 

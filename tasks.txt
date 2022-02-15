@@ -9,17 +9,19 @@ Atividade:
       Delete ->  baseUrl/users/:id ✅
 
     Orders:
-      CreateOrder (Info sobre product e customer)
-      DeleteOrder
+      Post   -> baseUrl/orders ✅
+      Get    -> baseUrl/orders ✅
+      Get    -> baseUrl/orders/:id ✅
+      Delete -> baseUrl/orders/:id ✅
 
-
-    Stock:
-      Create Product (com detalhes)
+    Products:
+      Post  -> baseUrl/products ✅ 
+      Get   -> baseUrl/products ✅
+      Get   -> baseUrl/products/:id ✅
+      Patch -> baseUrl/products/:id ✅
 
 
   Regras de negócio:
-    Uma order só poderá ser criada se houver estoque suficiente
-    Se uma order for criada, seus produtos devem ser subtraídos do estoque
-    Customer deve ter um campo Password encriptado
-
-  Proteger alguma rota usando JWT
+    Uma order só poderá ser criada se houver estoque suficiente ✅
+    Se uma order for criada, seus produtos devem ser subtraídos do estoque ✅
+    Customer deve ter um campo Password encriptado ✅
