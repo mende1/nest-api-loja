@@ -43,7 +43,7 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param() id: string): Promise<User | string> {
-    const user = await this.usersService.findOneByUsername(id);
+    const user = await this.usersService.findOneByID(id);
 
     if (user instanceof Error) {
       return user.message;

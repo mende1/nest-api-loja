@@ -22,13 +22,13 @@ export class ProductsService {
   }
 
   async findOne(id: string): Promise<Product | Error> {
-    const product = this.productRepository.findOne(id);
+    const product = await this.productRepository.findOne(id);
 
     if (!product) {
       return new Error('Product not found.');
     }
 
-    return await this.productRepository.findOne(id);
+    return product;
   }
 
   async update(id: string, quantity: number): Promise<Product> {
