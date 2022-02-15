@@ -19,7 +19,14 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto): Promise<User | string> {
+    const username = createUserDto.username;
+    const user = await this.usersService.findOneByUsername(username);
+
+    if (!(user instanceof Error)) {
+      return new Error('Username already exists.').message;
+    }
+
     const currentPassword = createUserDto.password;
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(currentPassword, saltOrRounds);
@@ -36,7 +43,7 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param() id: string): Promise<User | string> {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOneByUsername(id);
 
     if (user instanceof Error) {
       return user.message;
@@ -50,7 +57,7 @@ export class UsersController {
     @Param() id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User | string> {
-    const user = this.usersService.findOne(id);
+    const user = this.usersService.findOneByID(id);
 
     if (user instanceof Error) {
       return user.message;
@@ -67,7 +74,7 @@ export class UsersController {
 
   @Delete(':id')
   async delete(@Param() id: string): Promise<DeleteResult | string> {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findOneByID(id);
 
     if (user instanceof Error) {
       return user.message;
