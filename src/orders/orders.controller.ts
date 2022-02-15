@@ -43,12 +43,24 @@ export class OrdersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Order> {
-    return await this.ordersService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<Order | string> {
+    const order = await this.ordersService.findOne(id);
+
+    if (order instanceof Error) {
+      return order.message;
+    }
+
+    return order;
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<DeleteResult> {
+  async delete(@Param('id') id: string): Promise<DeleteResult | string> {
+    const order = await this.ordersService.findOne(id);
+
+    if (order instanceof Error) {
+      return order.message;
+    }
+
     return await this.ordersService.delete(id);
   }
 }

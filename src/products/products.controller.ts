@@ -20,11 +20,13 @@ export class ProductsController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Product | string> {
-    if (!(await this.productsService.findOne(id))) {
-      return new Error('Product not found.').message;
+    const product = await this.productsService.findOne(id);
+
+    if (product instanceof Error) {
+      return product.message;
     }
 
-    return await this.productsService.findOne(id);
+    return product;
   }
 
   @Patch(':id')
@@ -33,6 +35,10 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<Product | string> {
     const product = await this.productsService.findOne(id);
+
+    if (product instanceof Error) {
+      return product.message;
+    }
 
     const currentStock = product.quantity;
     const requestedStock = updateProductDto.quantity;

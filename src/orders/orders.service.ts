@@ -21,8 +21,14 @@ export class OrdersService {
     return await this.customerRepository.find();
   }
 
-  async findOne(id: string): Promise<Order> {
-    return await this.customerRepository.findOne(id);
+  async findOne(id: string): Promise<Order | Error> {
+    const order = await this.customerRepository.findOne(id);
+
+    if (!order) {
+      return new Error('Order not found.');
+    }
+
+    return order;
   }
 
   async delete(id: string): Promise<DeleteResult> {

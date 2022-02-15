@@ -35,15 +35,27 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findOne(@Param() id: string): Promise<User> {
-    return await this.usersService.findOne(id);
+  async findOne(@Param() id: string): Promise<User | string> {
+    const user = await this.usersService.findOne(id);
+
+    if (user instanceof Error) {
+      return user.message;
+    }
+
+    return user;
   }
 
   @Patch(':id')
   async update(
     @Param() id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  ): Promise<User | string> {
+    const user = this.usersService.findOne(id);
+
+    if (user instanceof Error) {
+      return user.message;
+    }
+
     const currentPassword = updateUserDto.password;
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(currentPassword, saltOrRounds);
@@ -54,7 +66,13 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async delete(@Param() id: string): Promise<DeleteResult> {
+  async delete(@Param() id: string): Promise<DeleteResult | string> {
+    const user = await this.usersService.findOne(id);
+
+    if (user instanceof Error) {
+      return user.message;
+    }
+
     return await this.usersService.delete(id);
   }
 }
