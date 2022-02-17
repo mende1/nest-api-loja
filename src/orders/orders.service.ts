@@ -14,11 +14,11 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     const order = this.customerRepository.create(createOrderDto);
 
-    return await this.customerRepository.save(order);
+    return this.customerRepository.save(order);
   }
 
   async findAll(): Promise<Order[]> {
-    return await this.customerRepository.find();
+    return this.customerRepository.find();
   }
 
   async findOne(id: string): Promise<Order | Error> {
@@ -32,6 +32,6 @@ export class OrdersService {
   }
 
   async delete(id: string): Promise<DeleteResult> {
-    return await this.customerRepository.delete(id);
+    return this.customerRepository.delete(id);
   }
 }

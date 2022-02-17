@@ -14,7 +14,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const result = this.usersRepository.create(createUserDto);
-    return await this.usersRepository.save(result);
+    return this.usersRepository.save(result);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
@@ -29,15 +29,15 @@ export class UsersService {
   }
 
   async delete(id: string): Promise<DeleteResult> {
-    return await this.usersRepository.delete(id);
+    return this.usersRepository.delete(id);
   }
 
   async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+    return this.usersRepository.find();
   }
 
   async findOneByID(id: string): Promise<User | Error> {
-    const user = await this.usersRepository.findOne(id);
+    const user = this.usersRepository.findOne(id);
 
     if (!user) {
       return new Error('User not found.');

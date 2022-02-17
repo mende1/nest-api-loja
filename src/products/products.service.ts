@@ -14,11 +14,11 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const product = this.productRepository.create(createProductDto);
 
-    return await this.productRepository.save(product);
+    return this.productRepository.save(product);
   }
 
   async findAll(): Promise<Product[]> {
-    return await this.productRepository.find();
+    return this.productRepository.find();
   }
 
   async findOne(id: string): Promise<Product | Error> {
@@ -36,6 +36,6 @@ export class ProductsService {
 
     product.quantity = quantity;
 
-    return await this.productRepository.save(product);
+    return this.productRepository.save(product);
   }
 }

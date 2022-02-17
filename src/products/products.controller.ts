@@ -10,12 +10,12 @@ export class ProductsController {
 
   @Post()
   async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return await this.productsService.create(createProductDto);
+    return this.productsService.create(createProductDto);
   }
 
   @Get()
   async findAll(): Promise<Product[]> {
-    return await this.productsService.findAll();
+    return this.productsService.findAll();
   }
 
   @Get(':id')
@@ -49,6 +49,6 @@ export class ProductsController {
 
     const updatedStock = currentStock - requestedStock;
 
-    return await this.productsService.update(id, updatedStock);
+    return this.productsService.update(id, updatedStock);
   }
 }

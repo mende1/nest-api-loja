@@ -33,12 +33,12 @@ export class UsersController {
 
     createUserDto.password = hashedPassword;
 
-    return await this.usersService.create(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Get()
   async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+    return this.usersService.findAll();
   }
 
   @Get(':id')
@@ -69,7 +69,7 @@ export class UsersController {
 
     updateUserDto.password = hashedPassword;
 
-    return await this.usersService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
@@ -80,6 +80,6 @@ export class UsersController {
       return user.message;
     }
 
-    return await this.usersService.delete(id);
+    return this.usersService.delete(id);
   }
 }

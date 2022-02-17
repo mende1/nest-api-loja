@@ -34,12 +34,12 @@ export class OrdersController {
 
     await this.productsService.update(productId, updatedStock);
 
-    return await this.ordersService.create(createOrderDto);
+    return this.ordersService.create(createOrderDto);
   }
 
   @Get()
   async findAll(): Promise<Order[]> {
-    return await this.ordersService.findAll();
+    return this.ordersService.findAll();
   }
 
   @Get(':id')
@@ -61,6 +61,6 @@ export class OrdersController {
       return order.message;
     }
 
-    return await this.ordersService.delete(id);
+    return this.ordersService.delete(id);
   }
 }
