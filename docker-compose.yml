@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  backend:
+    image: node:14-alpine
+    container_name: backend
+    command: sh -c "yarn && yarn run start:dev"
+    ports:
+      - '3000:3000'
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - api-mysql-data:/var/lib/mysql
+    restart: always
+    ports:
+      - '3308:3306'
+    environment: 
+      MYSQL_ROOT_PASSWORD: asdf
+      MYSQL_DATABASE: api-loja
+
+volumes:
+  api-mysql-data:
