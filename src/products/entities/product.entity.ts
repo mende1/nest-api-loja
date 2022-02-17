@@ -3,13 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v4 as uuid } from 'uuid';
 
 @Entity()
 export class Product {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -23,10 +23,4 @@ export class Product {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
 }
